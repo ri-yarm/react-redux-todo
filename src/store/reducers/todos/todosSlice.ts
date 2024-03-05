@@ -48,10 +48,32 @@ export const todosSlice = createSlice({
         useLocalTodos.saveTodosToLocalStorage(state.list);
       }
     },
+
+    filterCompletedTodo: (state) => {
+      const originalList = useLocalTodos.getTodosFromLocalStorage();
+      state.list = originalList.filter((todo) => todo.completed);
+    },
+
+    filterNotCompletedTodo: (state) => {
+      const originalList = useLocalTodos.getTodosFromLocalStorage();
+      state.list = originalList.filter((todo) => !todo.completed);
+    },
+
+    defaultSortTodo: (state) => {
+      state.list = useLocalTodos.getTodosFromLocalStorage();
+    },
   },
 });
 
-export const { addTodo, toggleTodo, deleteTodo, editTodo } = todosSlice.actions;
+export const {
+  addTodo,
+  toggleTodo,
+  deleteTodo,
+  editTodo,
+  filterCompletedTodo,
+  filterNotCompletedTodo,
+  defaultSortTodo,
+} = todosSlice.actions;
 
 export const selectTodos = (state: RootStore) => state.todos.list;
 
